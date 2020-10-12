@@ -28,6 +28,9 @@ export class Order {
   // products: Product[];
 
   // 2. 中间表有自定义字段的处理：
-  @OneToMany(() => OrderItem, item => item.order)
+  @OneToMany(
+    () => OrderItem,
+    item => item.order,
+    { cascade: true }) // 允许关联对象一起插入、更新、移除等
   orderItems: OrderItem[];
 }

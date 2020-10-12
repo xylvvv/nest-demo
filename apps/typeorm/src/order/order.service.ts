@@ -40,4 +40,41 @@ export class OrderService {
   create(order: Order): Promise<Order> {
     return this.orderRepository.save<Order>(order);
   }
+
+  async remove(order: Order): Promise<Order> {
+    // return this.orderRepository.remove(order);
+
+    // 事务的创建方式一：
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    let result;
+
+    try {
+      result = await queryRunner.manager.remove(order);
+
+      await queryRunner.commitTransaction();
+    } catch (e) {
+      // 如果遇到错误，可以回滚事务
+      await queryRunner.rollbackTransaction();
+    } finally {
+      // 需要手动实例化并部署一个queryRunner
+      await queryRunner.release();
+    }
+    return result
+
+    // // 事务的创建方式二：
+    // await this.connection.transaction(async manager => {
+    //   await manager.remove(order);
+    // });
+  }
+
+  update(order: Order): Promise<Order> {
+    return this.orderRepository.save(order);
+  }
+
+  find(id: number): Promise<Order> {
+    return this.orderRepository.findOne(id, { relations: ['orderItems'] });
+  }
 }
