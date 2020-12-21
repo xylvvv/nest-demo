@@ -61,6 +61,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/jwt/tsconfig.app.json"
       }
+    },
+    "upload": {
+      "type": "application",
+      "root": "apps/upload",
+      "entryFile": "main",
+      "sourceRoot": "apps/upload/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/upload/tsconfig.app.json"
+      }
+    },
+    "session": {
+      "type": "application",
+      "root": "apps/session",
+      "entryFile": "main",
+      "sourceRoot": "apps/session/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/session/tsconfig.app.json"
+      }
     }
   }
 }
